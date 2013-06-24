@@ -297,10 +297,10 @@ Create an object of user data:
 
 ```
 select json_object(
-           customer_id
-       ,   first_name
-       ,   last_name
-       ,   last_update
+           customer_id as customer_id
+       ,   first_name as first_name
+       ,   last_name as last_name
+       ,   last_update as last_update
        ) as customer
 from   customer 
 where  customer_id =1;
