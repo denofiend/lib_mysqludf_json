@@ -1,3 +1,4 @@
+
 CREATE TABLE `base_user_info_tmp` (
 	`user_id` int(11) NOT NULL,
 	`account` varchar(255) DEFAULT NULL,
@@ -75,7 +76,7 @@ INSERT INTO base_user_info_tmp
 	a.`email`,
 	a.mobile,
 	a.country_code,
-	a.region,1 from base_user_info a where a.`user_id` = NEW.`user_id`;
+	'com' as region,1 from base_user_info a where a.`user_id` = NEW.`user_id`;
 
 INSERT INTO `extend_user_info_tmp` 
 			select b.`user_id`, b.`first_name`,
