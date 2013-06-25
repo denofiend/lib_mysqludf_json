@@ -57,8 +57,9 @@ typedef long long longlong;
 #define JSON_RESULT 127
 #define JSON_PREFIX "json_"
 #define JSON_PREFIX_LENGTH 5
-#define JSON_NAN "NaN"
-#define JSON_NAN_LENGTH 3
+//#define JSON_NAN "NaN"
+#define JSON_NAN "null"
+#define JSON_NAN_LENGTH 4
 #define JSON_NULL "null"
 #define JSON_NULL_LENGTH 4
 
@@ -671,10 +672,10 @@ void write_json_value(
 			case INT_RESULT:
 				memcpy(
 						*buffer_ptr
-						,	"NaN"
-						,	3
+						,	"null"
+						,	4
 					  );
-				*buffer_ptr += 3;
+				*buffer_ptr += 4;
 				break;
 		}
 	} else {						//not NULL write a real value.

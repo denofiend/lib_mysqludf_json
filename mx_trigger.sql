@@ -1,11 +1,65 @@
+CREATE TABLE `base_user_info_tmp` (
+	`user_id` int(11) NOT NULL,
+	`account` varchar(255) DEFAULT NULL,
+	`password` char(64) DEFAULT NULL,
+	`nickname` varchar(255) DEFAULT NULL,
+	`gender` tinyint(4) DEFAULT '0',
+	`status` tinyint(4) DEFAULT '2',
+	`ip` varchar(50) DEFAULT NULL,
+	`register_time` char(10) DEFAULT NULL,
+	`update_time` char(10) DEFAULT NULL,
+	`language` char(50) DEFAULT NULL,
+	`from` char(20) DEFAULT NULL,
+	`email` varchar(255) DEFAULT NULL,
+	`mobile` varchar(255) DEFAULT NULL,
+	`country_code` int(11) DEFAULT NULL,
+	`region` varchar(255) DEFAULT NULL,
+	`id` bigint(20) NOT NULL,
+	UNIQUE KEY `nickname` (`nickname`),
+	UNIQUE KEY `account` (`account`),
+	UNIQUE KEY `email` (`email`),
+	UNIQUE KEY `mobile` (`mobile`,`country_code`),
+	KEY `register` (`register_time`),
+	KEY `user_id` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `extend_user_info_tmp` (
+	`user_id` int(11) NOT NULL,
+	`first_name` varchar(50) DEFAULT NULL,
+	`last_name` varchar(50) DEFAULT NULL,
+	`birthday` date DEFAULT NULL,
+	`timezone` tinyint(4) DEFAULT NULL,
+	`location` char(2) DEFAULT NULL,
+	`province` varchar(50) DEFAULT NULL,
+	`city` varchar(255) DEFAULT NULL,
+	`address` varchar(255) DEFAULT NULL,
+	`zipcode` varchar(50) DEFAULT NULL,
+	`phone_number` varchar(50) DEFAULT NULL,
+	`mobile_number` varchar(50) DEFAULT NULL,
+	`backup_email` varchar(50) DEFAULT NULL,
+	`avatarurl` varchar(255) DEFAULT NULL,
+	`im_type` varchar(50) DEFAULT NULL,
+	`im_value` varchar(255) DEFAULT NULL,
+	`realname` varchar(50) DEFAULT NULL,
+	`home_location` char(2) DEFAULT NULL,
+	`home_province` char(50) DEFAULT NULL,
+	`home_city` varchar(255) DEFAULT NULL,
+	`personalid` varchar(40) DEFAULT NULL,
+	`qq` varchar(40) DEFAULT NULL,
+	`flag` tinyint(4) DEFAULT NULL,
+	`skype` varchar(255) DEFAULT NULL,
+	PRIMARY KEY (`user_id`),
+	KEY `BackupEmail` (`backup_email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8; 
 
 		
 DELIMITER $$
 		
 		
-CREATE TRIGGER mx_user_transfer AFTER INSERT ON extend_user_info
+CREATE TRIGGER mx_user_transfer AFTER INSERT ON extend_user_info_tmp
 FOR EACH ROW BEGIN
-INSERT INTO base_user_info_tmp
+INSERT INTO base_user_info
 	select 
 	a.user_id,
 	a.account,
@@ -21,9 +75,9 @@ INSERT INTO base_user_info_tmp
 	a.`email`,
 	a.mobile,
 	a.country_code,
-	a.region,1 from base_user_info a where a.`user_id` = NEW.`user_id`;
+	a.region,1 from base_user_info_tmp a where a.`user_id` = NEW.`user_id`;
 
-INSERT INTO `extend_user_info_tmp` 
+INSERT INTO `extend_user_info` 
 			select b.`user_id`, b.`first_name`,
 			b.`last_name`,
 			b.`birthday`,
@@ -46,7 +100,7 @@ INSERT INTO `extend_user_info_tmp`
 			b.`personalid`,
 			b.`qq`,
 			0 as `flag`,
-			b.`skype`  from `extend_user_info` b where b.`user_id` = NEW.`user_id`;
+			b.`skype`  from `extend_user_info_tmp` b where b.`user_id` = NEW.`user_id`;
 
 	INSERT INTO `roll_transaction`(`user_id`, `type`, `json`) 
 		select a.`user_id`, 0 as `type`, 
@@ -67,9 +121,9 @@ INSERT INTO `extend_user_info_tmp`
 					a.country_code as country_code,
 					a.region as region,
 					a.id as id,
-					b.`first_name` as frist_name,
+					b.`first_name` as first_name,
 					b.`last_name` as last_name,
-					b.`birthday` as brithday,
+					b.`birthday` as birthday,
 					b.`timezone` as timezone,
 					b.`location` as location,
 					b.`province` as province,
@@ -90,7 +144,7 @@ INSERT INTO `extend_user_info_tmp`
 					b.`qq` as qq,
 					b.`flag` as flag,
 					b.`skype` as skype
-				) as `json` from `base_user_info_tmp` a, `extend_user_info_tmp` b where a.`user_id` = NEW.`user_id` and b.`user_id` = a.`user_id`;
+				) as `json` from `base_user_info` a, `extend_user_info` b where a.`user_id` = NEW.`user_id` and b.`user_id` = a.`user_id`;
 
 END;
 $$
