@@ -57,9 +57,9 @@ CREATE TABLE `extend_user_info_tmp` (
 DELIMITER $$
 		
 		
-CREATE TRIGGER mx_user_transfer AFTER INSERT ON extend_user_info_tmp
+CREATE TRIGGER mx_user_transfer AFTER INSERT ON extend_user_info
 FOR EACH ROW BEGIN
-INSERT INTO base_user_info
+INSERT INTO base_user_info_tmp
 	select 
 	a.user_id,
 	a.account,
@@ -75,9 +75,9 @@ INSERT INTO base_user_info
 	a.`email`,
 	a.mobile,
 	a.country_code,
-	a.region,1 from base_user_info_tmp a where a.`user_id` = NEW.`user_id`;
+	a.region,1 from base_user_info a where a.`user_id` = NEW.`user_id`;
 
-INSERT INTO `extend_user_info` 
+INSERT INTO `extend_user_info_tmp` 
 			select b.`user_id`, b.`first_name`,
 			b.`last_name`,
 			b.`birthday`,
@@ -100,7 +100,7 @@ INSERT INTO `extend_user_info`
 			b.`personalid`,
 			b.`qq`,
 			0 as `flag`,
-			b.`skype`  from `extend_user_info_tmp` b where b.`user_id` = NEW.`user_id`;
+			b.`skype`  from `extend_user_info` b where b.`user_id` = NEW.`user_id`;
 
 	INSERT INTO `roll_transaction`(`user_id`, `type`, `json`) 
 		select a.`user_id`, 0 as `type`, 
@@ -144,7 +144,7 @@ INSERT INTO `extend_user_info`
 					b.`qq` as qq,
 					b.`flag` as flag,
 					b.`skype` as skype
-				) as `json` from `base_user_info` a, `extend_user_info` b where a.`user_id` = NEW.`user_id` and b.`user_id` = a.`user_id`;
+				) as `json` from `base_user_info_tmp` a, `extend_user_info_tmp` b where a.`user_id` = NEW.`user_id` and b.`user_id` = a.`user_id`;
 
 END;
 $$
