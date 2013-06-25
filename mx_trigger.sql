@@ -1,4 +1,48 @@
+CREATE TABLE `extend_user_info` (
+  `user_id` int(11) NOT NULL,
+  `first_name` varchar(50) DEFAULT NULL,
+  `last_name` varchar(50) DEFAULT NULL,
+  `birthday` date DEFAULT NULL,
+  `timezone` tinyint(4) DEFAULT NULL,
+  `location` char(2) DEFAULT NULL,
+  `province` varchar(50) DEFAULT NULL,
+  `city` varchar(255) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `zipcode` varchar(50) DEFAULT NULL,
+  `phone_number` varchar(50) DEFAULT NULL,
+  `mobile_number` varchar(50) DEFAULT NULL,
+  `backup_email` varchar(50) DEFAULT NULL,
+  `avatarurl` varchar(255) DEFAULT NULL,
+  `im_type` varchar(50) DEFAULT NULL,
+  `im_value` varchar(255) DEFAULT NULL,
+  `realname` varchar(50) DEFAULT NULL,
+  `home_location` char(2) DEFAULT NULL,
+  `home_province` varchar(50) DEFAULT NULL,
+  `home_city` varchar(255) DEFAULT NULL,
+  `personalid` varchar(40) DEFAULT NULL,
+  `qq` varchar(40) DEFAULT NULL,
+  `flag` tinyint(4) DEFAULT NULL,
+  `skype` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`user_id`),
+  KEY `backup_email` (`backup_email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `done_send_transaction` (
+  `qid` bigint(20) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`qid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 
 
+CREATE TABLE `user_ids` (
+  `user_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8
+
+CREATE TABLE `roll_transaction` (
+  `queue_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) NOT NULL,
+  `type` int(11) DEFAULT NULL,
+  `json` varchar(1000) DEFAULT NULL,
+  PRIMARY KEY (`queue_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=18088 DEFAULT CHARSET=utf8 
 CREATE TABLE `base_user_info_tmp` (
 	`user_id` int(11) NOT NULL,
 	`account` varchar(255) DEFAULT NULL,
@@ -76,7 +120,7 @@ INSERT INTO base_user_info_tmp
 	a.`email`,
 	a.mobile,
 	a.country_code,
-	'com' as region,1 from base_user_info a where a.`user_id` = NEW.`user_id`;
+	'cn' as region,1 from base_user_info a where a.`user_id` = NEW.`user_id`;
 
 INSERT INTO `extend_user_info_tmp` 
 			select b.`user_id`, b.`first_name`,
@@ -151,6 +195,6 @@ END;
 $$
 
 
-insert into base_user_info (user_id, nickname, account, email)values(1, 'b', 'b@a.com', 'b@a.com');
-insert into extend_user_info (user_id)values(1);
+--insert into base_user_info (user_id, nickname, account, email)values(1, 'b', 'b@a.com', 'b@a.com');
+--insert into extend_user_info (user_id)values(1);
 
