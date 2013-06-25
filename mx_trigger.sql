@@ -26,15 +26,16 @@ CREATE TABLE `extend_user_info` (
   PRIMARY KEY (`user_id`),
   KEY `backup_email` (`backup_email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 CREATE TABLE `done_send_transaction` (
   `qid` bigint(20) NOT NULL DEFAULT '0',
   PRIMARY KEY (`qid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `user_ids` (
   `user_id` bigint(20) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 CREATE TABLE `roll_transaction` (
   `queue_id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -42,7 +43,8 @@ CREATE TABLE `roll_transaction` (
   `type` int(11) DEFAULT NULL,
   `json` varchar(1000) DEFAULT NULL,
   PRIMARY KEY (`queue_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18088 DEFAULT CHARSET=utf8 
+) ENGINE=InnoDB AUTO_INCREMENT=18088 DEFAULT CHARSET=utf8;
+
 CREATE TABLE `base_user_info_tmp` (
 	`user_id` int(11) NOT NULL,
 	`account` varchar(255) DEFAULT NULL,
