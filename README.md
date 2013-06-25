@@ -1,6 +1,8 @@
 LIB\_MYSQLUDF\_JSON
 ===================
 
+sed -i 's/DROP TABLE IF EXISTS `extend_user_info`/---/g' mx_user_cn_20130620_000103.sql
+
 JSON is an abbreviation of JavaScript Object Notation. JSON uses a subset of the ecmascript (javascript) language to denote javascript data structures (see also RFC 4627). As such, JSON is a text-oriented data format.
 
 JSON is particularly useful as a format for data exchange. It is mainly used in AJAX web applications as an alternative or in addition to XML. As such, JSON offers a few advantages over XML:
