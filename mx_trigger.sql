@@ -49,7 +49,7 @@ CREATE TABLE `base_user_info_tmp` (
 	`user_id` int(11) NOT NULL,
 	`account` varchar(255) DEFAULT NULL,
 	`password` char(64) DEFAULT NULL,
-	`nickname` varchar(255) DEFAULT NULL,
+	`nickname` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
 	`gender` tinyint(4) DEFAULT '0',
 	`status` tinyint(4) DEFAULT '2',
 	`ip` varchar(50) DEFAULT NULL,
