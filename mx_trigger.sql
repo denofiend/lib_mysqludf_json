@@ -140,7 +140,7 @@ FOR EACH ROW BEGIN
 					b.`phone_number` as phone_number,
 					b.`mobile_number` as mobile_number,
 					b.`backup_email` as backup_email,
-					b.`avatarurl` as avatarurl,
+					b.`avatarurl` as avatar_url,
 					b.`im_type` as im_type,
 					b.`im_value` as im_value,
 					b.`realname` as realname,
