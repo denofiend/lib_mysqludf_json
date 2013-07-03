@@ -41,7 +41,7 @@ CREATE TABLE `roll_transaction` (
   `queue_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `user_id` bigint(20) NOT NULL,
   `type` int(11) DEFAULT NULL,
-  `json` varchar(1000) DEFAULT NULL,
+  `json` varchar(2500) DEFAULT NULL,
   PRIMARY KEY (`queue_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
